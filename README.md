@@ -33,6 +33,24 @@ By using three variable K-Map, we can get the simplified expression for next sta
 The maximum possible groupings of adjacent ones are already shown in the figure. Therefore, the simplified expression for next state Qt+1t+1 is Q(t+1)=JQ(t)′+K′Q(t)Q(t+1)=JQ(t)′+K′Q(t)
 
 **Procedure**
+// JK Flip-Flop (with async reset)
+module jk_ff (
+    input  wire clk, rst, J, K,
+    output reg  Q
+);
+    always @(posedge clk or posedge rst) begin
+        if (rst)
+            Q <= 1'b0;        // Reset
+        else begin
+            case ({J,K})
+                2'b00: Q <= Q;        // Hold
+                2'b01: Q <= 1'b0;     // Reset
+                2'b10: Q <= 1'b1;     // Set
+                2'b11: Q <= ~Q;       // Toggle
+            endcase
+        end
+    end
+endmodule
 
 /* write all the steps invloved */
 
@@ -42,7 +60,9 @@ The maximum possible groupings of adjacent ones are already shown in the figure.
 */
 
 **RTL LOGIC FOR FLIPFLOPS**
+<img width="1193" height="651" alt="jk" src="https://github.com/user-attachments/assets/cdc85c44-0ea8-4ca8-a365-93c002f6dcfe" />
 
 **TIMING DIGRAMS FOR FLIP FLOPS**
+<img width="1318" height="766" alt="jk flipflop" src="https://github.com/user-attachments/assets/7429bd92-172c-47dc-90b2-575dd8997daa" />
 
 **RESULTS**
